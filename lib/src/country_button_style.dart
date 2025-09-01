@@ -25,6 +25,12 @@ class CountryButtonStyle {
   /// Wether to show the dropdown icon in the country button
   final bool showDropdownIcon;
 
+  /// The decoration of the country button
+  final Decoration? decoration;
+
+  /// The margin of the country button
+  final EdgeInsetsGeometry? margin;
+
   const CountryButtonStyle({
     this.textStyle,
     this.padding,
@@ -33,6 +39,8 @@ class CountryButtonStyle {
     this.showDialCode = true,
     this.showIsoCode = false,
     this.showDropdownIcon = true,
+    this.decoration,
+    this.margin,
   });
 
   CountryButtonStyle copyWith({
@@ -43,6 +51,8 @@ class CountryButtonStyle {
     bool? showDialCode,
     bool? showIsoCode,
     bool? showDropdownIcon,
+    Decoration? decoration,
+    EdgeInsetsGeometry? margin,
   }) {
     return CountryButtonStyle(
       textStyle: textStyle ?? this.textStyle,
@@ -52,6 +62,8 @@ class CountryButtonStyle {
       showDialCode: showDialCode ?? this.showDialCode,
       showIsoCode: showIsoCode ?? this.showIsoCode,
       showDropdownIcon: showDropdownIcon ?? this.showDropdownIcon,
+      decoration: decoration ?? this.decoration,
+      margin: margin ?? this.margin,
     );
   }
 }

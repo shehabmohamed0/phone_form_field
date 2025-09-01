@@ -16,7 +16,8 @@ class CountryButton extends StatelessWidget {
   final bool showIsoCode;
   final bool showDropdownIcon;
   final bool enabled;
-
+  final Decoration? decoration;
+  final EdgeInsetsGeometry? margin;
   const CountryButton({
     super.key,
     required this.isoCode,
@@ -29,6 +30,8 @@ class CountryButton extends StatelessWidget {
     this.showIsoCode = false,
     this.showDropdownIcon = true,
     this.enabled = true,
+    this.decoration,
+    this.margin,
   });
 
   @override
@@ -40,10 +43,12 @@ class CountryButton extends StatelessWidget {
         CountrySelectorLocalizationEn();
     final countryDialCode = '+ ${countryLocalization.countryDialCode(isoCode)}';
 
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: padding,
+    return Container(
+      margin: margin,
+      padding: padding,
+      decoration: decoration,
+      child: InkWell(
+        onTap: onTap,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[

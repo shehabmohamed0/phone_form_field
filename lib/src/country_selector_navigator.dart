@@ -305,15 +305,19 @@ class BottomSheetNavigator extends CountrySelectorNavigator {
     IsoCode? selected;
     final ctrl = showBottomSheet(
       context: context,
+      backgroundColor: Colors.transparent,
       builder: (_) => MediaQuery(
         data: MediaQueryData.fromView(View.of(context)),
         child: SafeArea(
-          child: _getCountrySelectorSheet(
-            inputContext: context,
-            onCountrySelected: (country) {
-              selected = country;
-              Navigator.pop(context, country);
-            },
+          child: ColoredBox(
+            color: Colors.white,
+            child: _getCountrySelectorSheet(
+              inputContext: context,
+              onCountrySelected: (country) {
+                selected = country;
+                Navigator.pop(context, country);
+              },
+            ),
           ),
         ),
       ),

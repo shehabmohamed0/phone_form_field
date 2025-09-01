@@ -75,9 +75,8 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
   }
 
   Widget builder() {
-    final textAlignment = _computeTextAlign();
-    final countryButtonForEachSlot =
-        _buildCountryButtonForEachSlot(textAlignment);
+    final textDirection = Directionality.of(context);
+    final countryButtonForEachSlot = _buildCountryButtonForEachSlot();
     return PhoneFieldSemantics(
       hasFocus: focusNode.hasFocus,
       enabled: widget.enabled,
@@ -99,7 +98,10 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
                   '[${AllowedCharacters.plus}${AllowedCharacters.digits}${AllowedCharacters.punctuation}]')),
             ],
         onChanged: _onTextfieldChanged,
-        textAlign: _computeTextAlign(),
+        textDirection: TextDirection.ltr,
+        textAlign: textDirection == TextDirection.ltr
+            ? TextAlign.left
+            : TextAlign.right,
         autofillHints: widget.autofillHints,
         keyboardType: widget.keyboardType,
         textInputAction: widget.textInputAction,
@@ -137,30 +139,20 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
     );
   }
 
-  TextAlign _computeTextAlign() {
-    final directionality = Directionality.of(context);
-    return directionality == TextDirection.ltr
-        ? TextAlign.start
-        : TextAlign.end;
-  }
+  // TextAlign _computeTextAlign() {
+  //   final directionality = Directionality.of(context);
+  //   return directionality == TextDirection.ltr
+  //       ? TextAlign.start
+  //       : TextAlign.end;
+  // }
 
   /// returns where the country button is placed in the input
-  Map<_CountryButtonSlot, Widget?> _buildCountryButtonForEachSlot(
-    TextAlign textAlign,
-  ) {
+  Map<_CountryButtonSlot, Widget?> _buildCountryButtonForEachSlot() {
     final countryButton = _buildCountryButton(context);
-    if (textAlign == TextAlign.start) {
-      if (widget.isCountryButtonPersistent) {
-        return {_CountryButtonSlot.prefixIcon: countryButton};
-      } else {
-        return {_CountryButtonSlot.prefix: countryButton};
-      }
+    if (widget.isCountryButtonPersistent) {
+      return {_CountryButtonSlot.prefixIcon: countryButton};
     } else {
-      if (widget.isCountryButtonPersistent) {
-        return {_CountryButtonSlot.suffixIcon: countryButton};
-      } else {
-        return {_CountryButtonSlot.suffix: countryButton};
-      }
+      return {_CountryButtonSlot.prefixIcon: countryButton};
     }
   }
 
@@ -182,6 +174,8 @@ class PhoneFormFieldState extends FormFieldState<PhoneNumber> {
             textStyle: widget.countryButtonStyle.textStyle,
             flagSize: widget.countryButtonStyle.flagSize,
             enabled: widget.enabled,
+            decoration: widget.countryButtonStyle.decoration,
+            margin: widget.countryButtonStyle.margin,
           ),
         ),
       ),
